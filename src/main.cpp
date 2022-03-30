@@ -13,6 +13,7 @@ int main () {
     const int img_height = static_cast<int>(img_width / aspect_ratio);
     const char* f_name = "./images/out.ppm";
 
+    // These values define the 3-dimensional space which makes up the image
     const double viewport_height = 2.0;
     const double viewport_width = viewport_height * aspect_ratio;
     const double focal_length = 1.0;
@@ -22,7 +23,8 @@ int main () {
     point origin(0, 0, 0);
     vec3 horizontal(viewport_width, 0, 0);
     vec3 vertical(0, viewport_height, 0);
-    auto bottom_left_corner = origin - (horizontal / 2) - (vertical / 2) - vec3(0, 0, focal_length);
+    vec3 depth(0, 0, focal_length);
+    point bottom_left_corner = origin - (horizontal / 2) - (vertical / 2) - depth;
 
     // Target
     ofstream out_ppm;
@@ -42,6 +44,7 @@ int main () {
     for (auto j = img_height - 1; j >= 0; j--) {
         if (j % (img_height / 10) == 0) { std::cout << j << " Lines remaining\n"; }
         for (auto i = 0; i < img_width; i++) {
+            //  
             double u = double (i) / (img_width - 1);
             double v = double(j) / (img_height - 1);
 

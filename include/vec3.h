@@ -46,6 +46,11 @@ public:
     double length() const;
     // Get the sum of squares of each component of the vector
     double length_squared() const;
+
+    vec3 as_color() {
+        v_type = COLOR;
+        return *this;
+    }
     
     // vector
     double v[3];

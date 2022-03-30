@@ -19,4 +19,6 @@ public:
 private:
     point orig;
     vec3 dir;
+
+    double hit_point(const point& center, const double radius);
 };
