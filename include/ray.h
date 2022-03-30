@@ -9,9 +9,14 @@
 // by a function of time. e.g. P(t) = A + tB defines a line for a
 // point which starts at A, and travels in direction B over time t
 class ray {
-    ray(point p, vec3 v): start_point(p), direction(v) {}
+public:
+    ray(point start, vec3 direction): orig(start), dir(direction) {}
 
-    point position(const int time);
-    point start_point;
-    vec3 direction;
+    point at(const double time);
+    color color();
+    point origin() const {return orig;};
+    vec3 direction() const {return dir;}
+private:
+    point orig;
+    vec3 dir;
 };

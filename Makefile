@@ -4,7 +4,7 @@ run: all
 all: clean build
 
 build:
-	g++ -o bin/main -I ./include -std=c++11 src/main.cpp src/vec3.cpp
+	g++ -o bin/main -I ./include -std=c++11 src/main.cpp src/vec3.cpp src/ray.cpp
 
 clean:
 	rm -f bin/* images/*

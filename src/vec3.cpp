@@ -72,3 +72,6 @@ double vec3::length() const {
 double vec3::length_squared() const {
     return pow(v[0], 2) + pow(v[1], 2) + pow(v[2], 2);
 }
+
+color make_color(double x, double y, double z) {return vec3(COLOR, x, y, z);}
+point make_point(double x, double y, double z) {return vec3(POINT, x, y, z);}
