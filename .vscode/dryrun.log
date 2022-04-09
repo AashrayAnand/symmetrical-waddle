@@ -1,8 +1,0 @@
-make --dry-run --keep-going --print-directory
-make: Entering directory `/Users/aashrayanand/Documents/code/ray tracing/cpp_one_weekend'
-rm -f bin/* images/*
-g++ -o bin/main -I ./include -std=c++11 src/main.cpp src/vec3.cpp src/ray.cpp src/sphere.cpp src/hittable_list.cpp src/camera.cpp
-./bin/main
- 
-make: Leaving directory `/Users/aashrayanand/Documents/code/ray tracing/cpp_one_weekend'
- 
