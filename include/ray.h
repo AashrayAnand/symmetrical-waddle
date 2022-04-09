@@ -1,7 +1,4 @@
 #pragma once
-#include <cmath>
-#include <iostream>
-
 #include "vec3.h"
 
 // A ray is a composition of a point, and a direction, where the ray
@@ -12,8 +9,7 @@ class ray {
 public:
     ray(point start, vec3 direction): orig(start), dir(direction) {}
 
-    point at(const double time);
-    color color();
+    point at(const double time) const;
     point origin() const {return orig;};
     vec3 direction() const {return dir;}
 private:

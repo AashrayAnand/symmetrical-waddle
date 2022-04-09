@@ -11,6 +11,11 @@ enum vec_t {
     VEC
 };
 
+// clamp x to either min or max
+inline double clamp(double x, double min, double max) {
+    return x < min ? min : (x > max ? max : x);
+}
+
 class vec3 {
 public:
     vec3(): v_type(VEC), v{0, 0, 0} {}
@@ -34,9 +39,9 @@ public:
 
     friend ostream& operator<<(ostream &out, const vec3& self) {
         if (self.v_type == COLOR) {
-            return out  << static_cast<int> (255.999 * self.v[0]) << ' ' 
-                    << static_cast<int> (255.999 * self.v[1]) << ' ' 
-                    << static_cast<int> (255.999 * self.v[2]) << ' ';
+            return out  << static_cast<int> (255.999 * clamp(self.v[0], 0.0, 0.999)) << ' ' 
+                    << static_cast<int> (255.999 * clamp(self.v[1], 0.0, 0.999)) << ' ' 
+                    << static_cast<int> (255.999 * clamp(self.v[2], 0.0, 0.999)) << ' ';
         }
         return out << self.v[0] << ' ' << self.v[1] << ' ' << self.v[2] << ' ';
     }
