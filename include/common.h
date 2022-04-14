@@ -16,14 +16,15 @@
 using std::shared_ptr;
 using std::make_shared;
 using std::vector;
-using std::sqrt;
 using std::ostream;
 using std::ofstream;
+using std::cout;
+using std::endl;
+
+using std::sqrt;
 using std::numeric_limits;
 using std::uniform_real_distribution;
 using std::mt19937;
-using std::cout;
-using std::endl;
 
 // Constants
 const double infin = numeric_limits<double>::infinity();
@@ -44,4 +45,23 @@ inline double rand_d() {
 // random number in range [min-max]
 inline double rand_range(double min, double max) {
     return min + (max - min) * rand_d();
+}
+
+inline vec3 rand_v() {return vec3(rand_d(), rand_d(), rand_d());}
+
+inline vec3 rand_v(double min, double max) {
+    return vec3(rand_range(min, max), rand_range(min, max), rand_range(min, max));
+}
+
+// For diffuse/opaque materials, we don't want to let rays pass through and apply
+// their color to the material the same as clear ones. We can simulate
+// the ray bouncing off the surface by getting a random vector in the unit sphere (the
+// sphere made by the unit normal either into or out of the sphere at the ray's
+// hit point).
+inline vec3 rand_in_unit_sphere() {
+    while(true) {
+        auto v = rand_v(-1, 1);
+        if (v.length_squared() >= 1) continue;
+        return v;
+    }
 }

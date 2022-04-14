@@ -1,18 +1,24 @@
 #include "camera.h"
 #include "sphere.h"
 
-color ray_color(const ray& ray, const hittable& obj) {
+color ray_color(const ray& r, const hittable& obj, int depth) {
     // First, check if the ray is going to hit a sphere
     // at some point
     hit_record hr;
 
+    // terminate recursion
+    if (depth <= 0) {
+        return make_color(0, 0, 0);
+    }
+
     // If the ray hits some point on the object's surface
-    if (obj.hit(ray, 0, infin, hr)) {
+    if (obj.hit(r, 0, infin, hr)) {
         // Apply 1/2 normal to white as color
-        return (0.5 * (hr.normal + make_color(1, 1, 1))).as_color();
+        point target = hr.hit_point + hr.normal + rand_in_unit_sphere();
+        return (0.5 * ray_color(ray(hr.hit_point, target - hr.hit_point), obj, depth -1)).as_color();
     }
     // Get unit vector for the ray's direction
-    vec3 ray_dir = unit_vec(ray.direction());
+    vec3 ray_dir = unit_vec(r.direction());
 
     // t will be some value between 0 and 1, since taking the
     // unit vector in the direction of our direction vector will
@@ -44,7 +50,7 @@ void camera::next(const hittable& objects, int i, int j) {
         auto v = (j + rand_d()) / (height_-1);
         vec3 direction = bottom_left_corner + u * horizontal + v * vertical - origin;
         ray r(origin, direction);
-        pixel += ray_color(r, objects);
+        pixel += ray_color(r, objects, 50 /* max depth */);
     }
 
     // scale down the pixel, averaging on the number of samples
