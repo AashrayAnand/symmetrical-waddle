@@ -12,8 +12,11 @@ color ray_color(const ray& r, const hittable& obj, int depth) {
     }
 
     // If the ray hits some point on the object's surface
-    if (obj.hit(r, 0, infin, hr)) {
-        // Apply 1/2 normal to white as color
+    if (obj.hit(r, 0.001, infin, hr)) {
+        // Below get a random point in the unit sphere from the normal
+        // to the ray's hit point on the surface, then recursively call
+        // ray color, to simulate the opaque object "rejecting" the ray,
+        // and randomly bouncing it elsewhere
         point target = hr.hit_point + hr.normal + rand_in_unit_sphere();
         return (0.5 * ray_color(ray(hr.hit_point, target - hr.hit_point), obj, depth -1)).as_color();
     }
@@ -56,6 +59,7 @@ void camera::next(const hittable& objects, int i, int j) {
     // scale down the pixel, averaging on the number of samples
     auto scale = 1.0 / samples_per_pixel;
     pixel *= scale;
+    color gamma_pixel = make_color(sqrt(pixel.x()), sqrt(pixel.y()), sqrt(pixel.z()));
 
-    out_file << pixel.as_color();
+    out_file << gamma_pixel;
 }
