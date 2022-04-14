@@ -65,3 +65,10 @@ inline vec3 rand_in_unit_sphere() {
         return v;
     }
 }
+
+// For true lambertian reflection, can't just pick a random point
+// in the unit sphere, we need to pick a point on the surface
+// of the unit sphere, offset along surface normal
+inline vec3 random_unit_vector() {
+    return unit_vec(rand_in_unit_sphere());
+}

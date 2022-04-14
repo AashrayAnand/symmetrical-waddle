@@ -17,7 +17,7 @@ color ray_color(const ray& r, const hittable& obj, int depth) {
         // to the ray's hit point on the surface, then recursively call
         // ray color, to simulate the opaque object "rejecting" the ray,
         // and randomly bouncing it elsewhere
-        point target = hr.hit_point + hr.normal + rand_in_unit_sphere();
+        point target = hr.hit_point + hr.normal + random_unit_vector();
         return (0.5 * ray_color(ray(hr.hit_point, target - hr.hit_point), obj, depth -1)).as_color();
     }
     // Get unit vector for the ray's direction
