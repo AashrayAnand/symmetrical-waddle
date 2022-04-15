@@ -7,6 +7,7 @@
 // point which starts at A, and travels in direction B over time t
 class ray {
 public:
+    ray() {}
     ray(point start, vec3 direction): orig(start), dir(direction) {}
 
     point at(const double time) const;

@@ -9,7 +9,7 @@ class camera {
 public:
     camera():
         aspect_ratio(16.0 / 9.0),
-        width_(600),
+        width_(400),
         viewport_height(2.0), 
         focal_length(1.0),
         samples_per_pixel(100)

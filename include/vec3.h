@@ -3,6 +3,7 @@
 #include <iostream>
 
 using std::sqrt;
+using std::fabs;
 using std::ostream;
 
 enum vec_t {
@@ -55,6 +56,11 @@ public:
     vec3 as_color() {
         v_type = COLOR;
         return *this;
+    }
+
+    bool near_zero() const {
+        const auto s = 1e-8;
+        return fabs(v[0] < s) && fabs(v[1] < s) && fabs(v[2] < s);
     }
     
     // vector

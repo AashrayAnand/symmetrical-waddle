@@ -72,3 +72,19 @@ inline vec3 rand_in_unit_sphere() {
 inline vec3 random_unit_vector() {
     return unit_vec(rand_in_unit_sphere());
 }
+
+// Below computes the reflection of a vector v off
+// a surface at a hit point with unit normal vecotr n.
+// v is going into the surface at this point and thus the
+// result is v's normal direction in going up but v dot n
+// (2x to account for reversing v)
+inline vec3 reflect(const vec3& v, const vec3& n) {
+    return v - 2 * dot(v, n) * n;
+}
+
+inline vec3 refract(const vec3& uv, const vec3& n, double etai_over_etat) {
+    auto cos_theta = fmin(dot(-1 * uv, n), 1.0);
+    vec3 r_o_perpend = etai_over_etat * (uv + cos_theta * n);
+    vec3 r_o_parallel = -sqrt(fabs(1.0 - r_o_perpend.length_squared())) * n;
+    return r_o_perpend + r_o_parallel;
+}

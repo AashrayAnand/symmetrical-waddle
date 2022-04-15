@@ -2,6 +2,9 @@
 #include "vec3.h"
 #include "ray.h"
 
+// Forward decl. the struct only, for fn defns.
+class material;
+
 // A hittable is defined as an object which can possibly
 // have volume, and may be hit by a ray. We can compose
 // hittables and rays to have multiple shapes and colors
@@ -12,6 +15,7 @@
 struct hit_record {
     point hit_point;
     vec3 normal;
+    shared_ptr<material> mat_ptr;
     double t;
     bool front_face;
 };

@@ -1,5 +1,6 @@
 #include "camera.h"
 #include "sphere.h"
+#include "material.h"
 
 color ray_color(const ray& r, const hittable& obj, int depth) {
     // First, check if the ray is going to hit a sphere
@@ -17,8 +18,14 @@ color ray_color(const ray& r, const hittable& obj, int depth) {
         // to the ray's hit point on the surface, then recursively call
         // ray color, to simulate the opaque object "rejecting" the ray,
         // and randomly bouncing it elsewhere
-        point target = hr.hit_point + hr.normal + random_unit_vector();
-        return (0.5 * ray_color(ray(hr.hit_point, target - hr.hit_point), obj, depth -1)).as_color();
+        ray scatt;
+        color attenuation;
+        if (hr.mat_ptr->scatter(r, hr, attenuation, scatt)) {
+            return (attenuation * ray_color(scatt, obj, depth - 1)).as_color();
+        }
+        return make_color(0, 0, 0);
+        //point target = hr.hit_point + hr.normal + random_unit_vector();
+        //return (0.5 * ray_color(ray(hr.hit_point, target - hr.hit_point), obj, depth -1)).as_color();
     }
     // Get unit vector for the ray's direction
     vec3 ray_dir = unit_vec(r.direction());
